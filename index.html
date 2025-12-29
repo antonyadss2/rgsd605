@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aria Productivity Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-glow: rgba(16, 185, 129, 0.4);
+            --bg: #020617;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --border: rgba(16, 185, 129, 0.3);
+            --red: #ef4444;
+            --text-dim: #94a3b8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        
+        body { 
+            width: 380px; 
+            background: var(--bg); 
+            color: #f8fafc; 
+            padding: 12px;
+            overflow: hidden;
+            height: 600px;
+            background-image: radial-gradient(circle at 50% -20%, #064e3b, transparent);
+        }
+
+        .shell {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        header { padding: 15px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .logo {
+            font-family: 'Anton', sans-serif;
+            font-size: 24px;
+            color: var(--primary);
+            letter-spacing: 1.5px;
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        /* TAB NAVIGATION - FIX TRIỆT ĐỂ */
+        .nav-tabs {
+            display: flex;
+            margin: 12px;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 4px;
+            border-radius: 12px;
+            gap: 4px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .tab-item {
+            flex: 1;
+            padding: 10px 0;
+            font-size: 11px;
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            user-select: none;
+            border: 1px solid transparent;
+        }
+
+        .tab-item.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 12px var(--primary-glow);
+        }
+
+        main { 
+            padding: 0 15px 15px 15px; 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column;
+            position: relative;
+        }
+        
+        /* PANE SYSTEM - SỬ DỤNG CLASS ĐỂ ĐIỀU KHIỂN */
+        .tab-pane { 
+            display: none; 
+            flex-direction: column; 
+            height: 100%; 
+            animation: fadeIn 0.25s ease;
+        }
+        
+        .tab-pane.active { 
+            display: flex !important; 
+        }
+
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(5px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        .section-header {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .content-area {
+            flex: 1;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            overflow: hidden;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            color: #e2e8f0;
+            padding: 12px;
+            font-size: 13px;
+            resize: none;
+            outline: none;
+            line-height: 1.5;
+        }
+
+        /* TIMER STYLES */
+        .timer-display {
+            font-family: 'Anton', sans-serif;
+            font-size: 72px;
+            color: var(--primary);
+            text-align: center;
+            margin: 20px 0;
+            text-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .input-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        .input-card {
+            flex: 1;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        .input-card input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            width: 100%;
+            text-align: center;
+            font-size: 28px;
+            font-weight: 800;
+            outline: none;
+        }
+        .input-card label { font-size: 9px; color: var(--text-dim); text-transform: uppercase; margin-top: 4px; display: block; }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            border: none;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 4px 15px var(--primary-glow); }
+        .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        .btn-primary:active { transform: translateY(0); }
+        .btn-primary:disabled { background: #334155; color: #64748b; box-shadow: none; cursor: not-allowed; }
+        
+        .btn-danger { background: var(--red); color: #fff; margin-top: 10px; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2); }
+
+        .status-footer {
+            text-align: center;
+            font-size: 10px;
+            color: var(--text-dim);
+            margin-top: auto;
+            padding: 10px 0;
+        }
+
+        .pulse { animation: pulseAnim 2s infinite; }
+        @keyframes pulseAnim { 
+            0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } 
+        }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <header><div class="logo">ARIA PRODUCTIVITY</div></header>
+        
+        <nav class="nav-tabs" id="tabManager">
+            <div class="tab-item active" data-pane="pane1">Mục 1: ID TKQC</div>
+            <div class="tab-item" data-pane="pane2">Mục 2: Hẹn Giờ</div>
+        </nav>
+
+        <main>
+            <!-- MỤC 1 -->
+            <div id="pane1" class="tab-pane active">
+                <div class="section-header"><span>●</span> DANH SÁCH ID TÀI KHOẢN</div>
+                <div class="content-area">
+                    <textarea id="idStorage" placeholder="Nhập danh sách ID tại đây..."></textarea>
+                </div>
+                <div class="status-footer" id="notesStatus">Bộ nhớ đám mây đã sẵn sàng</div>
+            </div>
+
+            <!-- MỤC 2 -->
+            <div id="pane2" class="tab-pane">
+                <div id="timerBigDisplay" class="timer-display">00:00:00</div>
+                <div class="input-group">
+                    <div class="input-card">
+                        <input type="number" id="mInput" value="10" min="0">
+                        <label>Phút</label>
+                    </div>
+                    <div class="input-card">
+                        <input type="number" id="sInput" value="0" min="0" max="59">
+                        <label>Giây</label>
+                    </div>
+                </div>
+                <button id="startBtn" class="btn btn-primary">Bắt Đầu Hẹn Giờ</button>
+                <button id="stopBtn" class="btn btn-danger">Tắt Báo Động</button>
+                <div id="timerStatus" class="status-footer">Hệ thống đang chờ lệnh</div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

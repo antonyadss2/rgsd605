@@ -1,0 +1,1 @@
+// File này không còn được sử dụng trong bản Vanilla JS để tránh lỗi CSP trắng trang.

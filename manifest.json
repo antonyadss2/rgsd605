@@ -1,0 +1,19 @@
+
+{
+  "manifest_version": 3,
+  "name": "Aria Productivity Pro",
+  "version": "3.1.0",
+  "description": "Premium Notes & Persistent Timer with Guaranteed Offscreen Audio.",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage",
+    "notifications",
+    "alarms",
+    "offscreen"
+  ]
+}
