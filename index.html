@@ -198,9 +198,138 @@
         }
 
         .pulse { animation: pulseAnim 2s infinite; }
-        @keyframes pulseAnim { 
-            0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } 
+        @keyframes pulseAnim {
+            0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; }
         }
+
+        /* ===== CHAT AI KÉP ===== */
+        #pane3.tab-pane.active { display: flex; }
+
+        .chat-settings {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 10px;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .chat-settings.open { display: flex; }
+
+        .cfg-row { display: flex; flex-direction: column; gap: 4px; }
+        .cfg-grid { display: flex; gap: 10px; }
+        .cfg-grid .cfg-row { flex: 1; }
+        .chat-settings label { font-size: 9px; font-weight: 800; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.4px; }
+        .chat-settings input, .chat-settings select {
+            background: rgba(2, 6, 23, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: #e2e8f0;
+            padding: 9px 10px;
+            font-size: 12px;
+            outline: none;
+            width: 100%;
+        }
+        .chat-settings input:focus, .chat-settings select:focus { border-color: var(--primary); }
+        .cfg-save { padding: 10px; font-size: 11px; }
+        .cfg-hint { font-size: 9.5px; color: var(--text-dim); line-height: 1.45; }
+        .cfg-hint b { color: var(--primary); }
+
+        .chat-toolbar { display: flex; align-items: center; gap: 8px; margin: 10px 0; }
+        .chip {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border);
+            color: #e2e8f0;
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s;
+            user-select: none;
+        }
+        .chip:hover { border-color: var(--primary); }
+        .chip-danger { color: #fca5a5; margin-left: auto; border-color: rgba(239,68,68,0.3); }
+        .chip-danger:hover { border-color: var(--red); }
+        .chip-static { font-size: 9.5px; color: var(--text-dim); font-weight: 700; }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 4px 2px;
+            min-height: 0;
+        }
+        .chat-messages::-webkit-scrollbar { width: 5px; }
+        .chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+        .msg { max-width: 92%; display: flex; flex-direction: column; gap: 3px; }
+        .msg .who { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; opacity: 0.85; }
+        .msg .bubble {
+            padding: 9px 12px;
+            border-radius: 12px;
+            font-size: 12.5px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .msg.user { align-self: flex-end; align-items: flex-end; }
+        .msg.user .bubble { background: var(--primary); color: #fff; border-bottom-right-radius: 4px; }
+        .msg.user .who { color: var(--primary); }
+
+        .msg.claude { align-self: flex-start; }
+        .msg.claude .who { color: #c4b5fd; }
+        .msg.claude .bubble { background: rgba(124, 58, 237, 0.18); border: 1px solid rgba(167, 139, 250, 0.35); border-bottom-left-radius: 4px; }
+
+        .msg.gpt { align-self: flex-start; }
+        .msg.gpt .who { color: #6ee7b7; }
+        .msg.gpt .bubble { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16,185,129,0.35); border-bottom-left-radius: 4px; }
+
+        .msg.error .who { color: var(--red); }
+        .msg.error .bubble { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239,68,68,0.4); color: #fecaca; font-size: 11px; }
+
+        .bubble.thinking { color: var(--text-dim); font-style: italic; }
+        .dots::after { content: '●'; animation: dotPulse 1.2s infinite; }
+        @keyframes dotPulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+        .chat-empty { margin: auto; text-align: center; color: var(--text-dim); font-size: 11px; line-height: 1.6; padding: 20px; }
+
+        .chat-input-row { display: flex; gap: 8px; align-items: flex-end; margin-top: 10px; }
+        .chat-input-row textarea {
+            flex: 1;
+            height: auto;
+            min-height: 42px;
+            max-height: 120px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: #e2e8f0;
+            padding: 11px 12px;
+            font-size: 12.5px;
+            resize: none;
+            outline: none;
+            line-height: 1.4;
+        }
+        .chat-input-row textarea:focus { border-color: var(--primary); }
+        .chat-send {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            width: 46px;
+            height: 42px;
+            font-size: 16px;
+            cursor: pointer;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px var(--primary-glow);
+            transition: all 0.15s;
+        }
+        .chat-send:hover:not(:disabled) { filter: brightness(1.1); }
+        .chat-send:disabled { background: #334155; color: #64748b; box-shadow: none; cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -208,8 +337,9 @@
         <header><div class="logo">ARIA PRODUCTIVITY</div></header>
         
         <nav class="nav-tabs" id="tabManager">
-            <div class="tab-item active" data-pane="pane1">Mục 1: ID TKQC</div>
-            <div class="tab-item" data-pane="pane2">Mục 2: Hẹn Giờ</div>
+            <div class="tab-item active" data-pane="pane1">ID TKQC</div>
+            <div class="tab-item" data-pane="pane2">Hẹn Giờ</div>
+            <div class="tab-item" data-pane="pane3">Chat AI Kép</div>
         </nav>
 
         <main>
@@ -239,7 +369,54 @@
                 <button id="stopBtn" class="btn btn-danger">Tắt Báo Động</button>
                 <div id="timerStatus" class="status-footer">Hệ thống đang chờ lệnh</div>
             </div>
+
+            <!-- MỤC 3: CHAT AI KÉP -->
+            <div id="pane3" class="tab-pane">
+                <div class="chat-settings" id="chatSettings">
+                    <div class="cfg-row">
+                        <label>🔑 API Key Anthropic (Claude)</label>
+                        <input type="password" id="anthropicKey" placeholder="sk-ant-..." autocomplete="off">
+                    </div>
+                    <div class="cfg-row">
+                        <label>🔑 API Key OpenAI (ChatGPT)</label>
+                        <input type="password" id="openaiKey" placeholder="sk-..." autocomplete="off">
+                    </div>
+                    <div class="cfg-grid">
+                        <div class="cfg-row">
+                            <label>Model Claude</label>
+                            <input type="text" id="claudeModel" placeholder="claude-opus-5-5" autocomplete="off">
+                        </div>
+                        <div class="cfg-row">
+                            <label>Model ChatGPT</label>
+                            <input type="text" id="gptModel" placeholder="gpt-4o-mini" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="cfg-row">
+                        <label>Chế độ phối hợp</label>
+                        <select id="chatMode">
+                            <option value="parallel">Song song — cả 2 cùng trả lời</option>
+                            <option value="collaborate">Hợp tác — Claude trả lời, ChatGPT bổ sung</option>
+                        </select>
+                    </div>
+                    <button id="saveCfgBtn" class="btn btn-primary cfg-save">Lưu cấu hình</button>
+                    <div class="cfg-hint">🔒 Key chỉ lưu trên máy bạn (chrome.storage) và chỉ gửi tới chính Anthropic/OpenAI. App dùng key của <b>chính bạn</b> để gọi API.</div>
+                </div>
+
+                <div class="chat-toolbar">
+                    <button id="toggleCfgBtn" class="chip">⚙️ Cấu hình</button>
+                    <span id="modeLabel" class="chip-static">—</span>
+                    <button id="clearChatBtn" class="chip chip-danger">🗑️ Xóa</button>
+                </div>
+
+                <div class="chat-messages" id="chatMessages"></div>
+
+                <div class="chat-input-row">
+                    <textarea id="chatInput" rows="1" placeholder="Nhắn cho cả Claude và ChatGPT..."></textarea>
+                    <button id="chatSendBtn" class="chat-send" title="Gửi">➤</button>
+                </div>
+            </div>
         </main>
     </div>
+    <script src="app.js"></script>
 </body>
 </html>
