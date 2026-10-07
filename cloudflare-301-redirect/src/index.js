@@ -13,7 +13,7 @@
 const CONFIG = {
   // 👉 Link bạn muốn chuyển TỚI. BẮT BUỘC điền (thay cho giá trị mẫu).
   //    Ví dụ: "https://trang-dich-cua-ban.com/landing"
-  TARGET_URL: "https://example.com",
+  TARGET_URL: "https://www.facebook.com/messages/t/1468377063431052",
 
   // Mã trạng thái chuyển hướng:
   //   301 = chuyển hướng vĩnh viễn (mặc định, được trình duyệt/Google cache)
