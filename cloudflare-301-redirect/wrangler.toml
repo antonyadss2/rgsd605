@@ -1,0 +1,13 @@
+# Cấu hình deploy cho Cloudflare Worker (301 redirect)
+# Đổi "name" nếu muốn tên Worker khác.
+name = "redirect-301"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+# --- (Tuỳ chọn) Gắn tên miền riêng ---------------------------------
+# Bỏ dấu # và điền domain của bạn (đã trỏ về Cloudflare) để redirect
+# chạy trên domain đó. Nếu không, Worker chạy ở <name>.<tài-khoản>.workers.dev
+#
+# routes = [
+#   { pattern = "link.domaincuaban.com/*", zone_name = "domaincuaban.com" }
+# ]
